@@ -1,6 +1,7 @@
 package com.example.retornosAPI.controllers;
 
 import com.example.retornosAPI.models.Product;
+import com.example.retornosAPI.models.ProductEntity;
 import com.example.retornosAPI.services.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +24,12 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+    public ResponseEntity<ProductEntity> getProductById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getProductById(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
+    public ResponseEntity<List<ProductEntity>> getAllProducts() {
         return ResponseEntity.ok(service.getAllProducts());
     }
 
@@ -36,5 +37,15 @@ public class ProductController {
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         service.deleteProduct(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable(value = "id") Long id, @RequestBody Product updatedProduct){
+        try {
+            Product updated = service.updateProduct(id, updatedProduct);
+            return ResponseEntity.ok(updated);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
