@@ -1,13 +1,13 @@
 package com.example.retornosAPI.models;
 
-public enum Categoria {
-    ELETRONICO("Eletrônicos"),
-    ROUPA("Roupas"),
-    ALIMENTO("Alimento");
+public enum Category {
+    ELECTRONIC("Eletrônicos"),
+    CLOTHES("Roupas"),
+    FOOD("Alimento");
 
     private final String categoriaProduto;
 
-    Categoria(String categoriaProduto){
+    Category(String categoriaProduto){
         this.categoriaProduto = categoriaProduto;
     }
 
