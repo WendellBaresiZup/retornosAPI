@@ -25,7 +25,7 @@ public class ProductService {
     public ProductEntity getProductById(Long id) {
         ProductEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        return new ProductEntity(entity.getId(), entity.getName(), entity.getDescription(), entity.getPrice(), entity.getStockQuantity(), entity.getCategoria());
+        return new ProductEntity(entity.getId(), entity.getName(), entity.getDescription(), entity.getPrice(), entity.getStockQuantity(), entity.getCategory());
     }
 
     public List<ProductEntity> getAllProducts() {
