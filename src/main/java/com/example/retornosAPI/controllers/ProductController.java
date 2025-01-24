@@ -6,6 +6,7 @@ import com.example.retornosAPI.services.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -46,6 +47,19 @@ public class ProductController {
             return ResponseEntity.ok(updated);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductEntity>> getProductByName(@RequestParam String name){
+        try {
+            List<ProductEntity> products = service.getProductsByName(name);
+            if (products.isEmpty()){
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(products);
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(Collections.emptyList());
         }
     }
 }
