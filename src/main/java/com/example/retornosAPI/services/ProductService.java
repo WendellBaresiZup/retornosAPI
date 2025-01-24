@@ -29,9 +29,7 @@ public class ProductService {
     }
 
     public List<ProductEntity> getAllProducts() {
-        return repository.findAll().stream()
-                .map(entity -> new ProductEntity(entity.getId(), entity.getName(), entity.getDescription(),entity.getPrice(), entity.getStockQuantity(), entity.getCategory()))
-                .collect(Collectors.toList());
+        return repository.findAll().stream().map(entity -> new ProductEntity(entity.getId(), entity.getName(), entity.getDescription(),entity.getPrice(), entity.getStockQuantity(), entity.getCategory())).collect(Collectors.toList());
     }
 
     public void deleteProduct(Long id) {
