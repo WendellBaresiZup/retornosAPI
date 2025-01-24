@@ -5,13 +5,13 @@ public enum Category {
     CLOTHES("Roupas"),
     FOOD("Alimento");
 
-    private final String categoriaProduto;
+    private final String productCategory;
 
-    Category(String categoriaProduto){
-        this.categoriaProduto = categoriaProduto;
+    Category(String productCategory){
+        this.productCategory = productCategory;
     }
 
-    public String getCategoriaProduto(){
-        return categoriaProduto;
+    public String getProductCategory(){
+        return productCategory;
     }
 }

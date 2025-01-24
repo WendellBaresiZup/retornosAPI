@@ -77,11 +77,4 @@ public class ProductEntity {
         this.category = category;
     }
 
-    public Category getCategoria() {
-        return category;
-    }
-
-    public void setCategoria(Category category) {
-        this.category = category;
-    }
 }
