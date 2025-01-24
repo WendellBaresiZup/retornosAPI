@@ -11,7 +11,7 @@ public class ProductEntity {
     private String name;
     private String description;
     private Double price;
-    private String stockQuantity;
+    private Integer stockQuantity;
 
     @Enumerated(EnumType.STRING)
     private Category category;
@@ -20,7 +20,7 @@ public class ProductEntity {
     }
 
 
-    public ProductEntity(Long id, String name, String description, Double price, String stockQuantity, Category category) {
+    public ProductEntity(Long id, String name, String description, Double price, Integer stockQuantity, Category category) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -61,11 +61,11 @@ public class ProductEntity {
         this.description = description;
     }
 
-    public String getStockQuantity() {
+    public Integer getStockQuantity() {
         return stockQuantity;
     }
 
-    public void setStockQuantity(String stockQuantity) {
+    public void setStockQuantity(Integer stockQuantity) {
         this.stockQuantity = stockQuantity;
     }
 
