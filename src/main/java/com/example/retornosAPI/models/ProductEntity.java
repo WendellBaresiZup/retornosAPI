@@ -9,20 +9,24 @@ public class ProductEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String descricao;
+    private String description;
     private Double price;
-    private String quantEstoque;
+    private String stockQuantity;
 
     @Enumerated(EnumType.STRING)
-    private Categoria categoria;
+    private Category category;
 
     public ProductEntity() {
     }
 
-    public ProductEntity(Long id, String name, Double price) {
+
+    public ProductEntity(Long id, String name, String description, Double price, String stockQuantity, Category category) {
         this.id = id;
         this.name = name;
+        this.description = description;
         this.price = price;
+        this.stockQuantity = stockQuantity;
+        this.category = category;
     }
 
     public void setId(Long id) {
@@ -49,27 +53,35 @@ public class ProductEntity {
         return price;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getQuantEstoque() {
-        return quantEstoque;
+    public String getStockQuantity() {
+        return stockQuantity;
     }
 
-    public void setQuantEstoque(String quantEstoque) {
-        this.quantEstoque = quantEstoque;
+    public void setStockQuantity(String stockQuantity) {
+        this.stockQuantity = stockQuantity;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Category getCategoria() {
+        return category;
+    }
+
+    public void setCategoria(Category category) {
+        this.category = category;
     }
 }
