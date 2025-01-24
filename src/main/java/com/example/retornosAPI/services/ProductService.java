@@ -1,12 +1,10 @@
 package com.example.retornosAPI.services;
-
 import com.example.retornosAPI.models.Product;
 import com.example.retornosAPI.models.ProductEntity;
 import com.example.retornosAPI.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,20 +17,20 @@ public class ProductService {
     }
 
     public Product createProduct(Product product) {
-        ProductEntity entity = new ProductEntity(null, product.name(), product.price());
+        ProductEntity entity = new ProductEntity(null, product.name(),product.descricao() ,product.price(),product.quanEstoque(), product.category());
         ProductEntity savedEntity = repository.save(entity);
-        return new Product(savedEntity.getId(), savedEntity.getName(), savedEntity.getPrice());
+        return new Product(savedEntity.getId(), savedEntity.getName(),savedEntity.getDescription() ,savedEntity.getPrice(), savedEntity.getStockQuantity(), savedEntity.getCategory());
     }
 
-    public Product getProductById(Long id) {
+    public ProductEntity getProductById(Long id) {
         ProductEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        return new Product(entity.getId(), entity.getName(), entity.getPrice());
+        return new ProductEntity(entity.getId(), entity.getName(), entity.getDescription(), entity.getPrice(), entity.getStockQuantity(), entity.getCategoria());
     }
 
-    public List<Product> getAllProducts() {
+    public List<ProductEntity> getAllProducts() {
         return repository.findAll().stream()
-                .map(entity -> new Product(entity.getId(), entity.getName(), entity.getPrice()))
+                .map(entity -> new ProductEntity(entity.getId(), entity.getName(), entity.getDescription(),entity.getPrice(), entity.getStockQuantity(), entity.getCategory()))
                 .collect(Collectors.toList());
     }
 
@@ -54,11 +52,11 @@ public class ProductService {
         ProductEntity savedEntity = repository.save(existingEntity);
 
         // Retornar o produto atualizado
-        return new Product(savedEntity.getId(), savedEntity.getName(), savedEntity.getPrice());
+        return new Product(savedEntity.getId(), savedEntity.getName(),savedEntity.getDescription() ,savedEntity.getPrice(), savedEntity.getStockQuantity(), savedEntity.getCategory());
     }
 
     // Buscar produtos pelo nome
-    public List<Product> getProductsByName(String name) {
+    public List<ProductEntity> getProductsByName(String name) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("O nome do produto não pode ser vazio.");
         }
@@ -70,7 +68,7 @@ public class ProductService {
             System.out.println("Produtos encontrados com o nome '" + name + "': " + entities.size());
         }
         return entities.stream()
-                .map(entity -> new Product(entity.getId(), entity.getName(), entity.getPrice()))
+                .map(entity -> new ProductEntity(entity.getId(), entity.getName(), entity.getDescription() ,entity.getPrice(), entity.getStockQuantity(), entity.getCategory()))
                 .collect(Collectors.toList());
     }
 }
