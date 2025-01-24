@@ -39,16 +39,12 @@ public class ProductService {
     // Atualizar um produto existente
     public Product updateProduct(Long id, Product updatedProduct) {
         // Verificar se o produto existe
-        ProductEntity existingEntity = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product with ID " + id + " not found"));
-
+        ProductEntity existingEntity = repository.findById(id).orElseThrow(() -> new RuntimeException("Product with ID " + id + " not found"));
         // Atualizar os dados do produto
         existingEntity.setName(updatedProduct.name());
         existingEntity.setPrice(updatedProduct.price());
-
         // Salvar as alterações no banco de dados
         ProductEntity savedEntity = repository.save(existingEntity);
-
         // Retornar o produto atualizado
         return new Product(savedEntity.getId(), savedEntity.getName(),savedEntity.getDescription() ,savedEntity.getPrice(), savedEntity.getStockQuantity(), savedEntity.getCategory());
     }
