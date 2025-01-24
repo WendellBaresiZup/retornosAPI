@@ -17,7 +17,7 @@ public class ProductService {
     }
 
     public Product createProduct(Product product) {
-        ProductEntity entity = new ProductEntity(null, product.name(),product.descricao() ,product.price(),product.quanEstoque(), product.category());
+        ProductEntity entity = new ProductEntity(null, product.name(),product.description() ,product.price(),product.stockQuantity(), product.category());
         ProductEntity savedEntity = repository.save(entity);
         return new Product(savedEntity.getId(), savedEntity.getName(),savedEntity.getDescription() ,savedEntity.getPrice(), savedEntity.getStockQuantity(), savedEntity.getCategory());
     }
