@@ -54,15 +54,12 @@ public class ProductService {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("O nome do produto não pode ser vazio.");
         }
-
         List<ProductEntity> entities = repository.findByNameContainingIgnoreCase(name);
         if (entities.isEmpty()) {
             System.out.println("Nenhum produto encontrado com o nome: " + name);
         } else {
             System.out.println("Produtos encontrados com o nome '" + name + "': " + entities.size());
         }
-        return entities.stream()
-                .map(entity -> new ProductEntity(entity.getId(), entity.getName(), entity.getDescription() ,entity.getPrice(), entity.getStockQuantity(), entity.getCategory()))
-                .collect(Collectors.toList());
+        return entities.stream().map(entity -> new ProductEntity(entity.getId(), entity.getName(), entity.getDescription() ,entity.getPrice(), entity.getStockQuantity(), entity.getCategory())).collect(Collectors.toList());
     }
 }
