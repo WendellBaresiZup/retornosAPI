@@ -58,13 +58,13 @@ public class ProductService {
     // Buscar produtos pelo nome
     public List<ProductEntity> getProductsByName(String name) {
         if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("O nome do produto não pode ser vazio.");
+            throw new IllegalArgumentException("The product name can't be empty.");
         }
         List<ProductEntity> entities = repository.findByNameContainingIgnoreCase(name);
         if (entities.isEmpty()) {
-            System.out.println("Nenhum produto encontrado com o nome: " + name);
+            System.out.println("No products found with the name: " + name);
         } else {
-            System.out.println("Produtos encontrados com o nome '" + name + "': " + entities.size());
+            System.out.println("Products found with the name '" + name + "': " + entities.size());
         }
         return entities.stream().map(entity -> new ProductEntity(entity.getId(), entity.getName(), entity.getDescription() ,entity.getPrice(), entity.getStockQuantity(), entity.getCategory())).collect(Collectors.toList());
     }
