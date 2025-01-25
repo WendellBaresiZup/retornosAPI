@@ -41,6 +41,8 @@ public class ProductService {
     public Product updateProduct(Long id, Product updatedProduct) {
         // Verificar se o produto existe
         ProductEntity existingEntity = repository.findById(id).orElseThrow(() -> new RuntimeException("Product with ID " + id + " not found"));
+        //Chama o metodo de validacoes para seguir os requisitos.
+        validateProduct(updatedProduct);
         // Atualizar os dados do produto
         existingEntity.setName(updatedProduct.name());
         existingEntity.setDescription(updatedProduct.description());
