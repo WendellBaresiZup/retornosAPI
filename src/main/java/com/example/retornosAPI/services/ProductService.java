@@ -81,8 +81,13 @@ public class ProductService {
 
     private void validateProductPrice(double price){
         if (price <= 0){
-            throw new IllegalArgumentException("The product price must be more than 0");
+            throw new IllegalArgumentException("The product price must be more than 0.");
         }
     }
 
+    private void validateProductStock(int stockQuantity){
+        if (stockQuantity < 0){
+            throw new IllegalArgumentException("The quantity in stock must be greater than or equal to 0.");
+        }
+    }
 }
