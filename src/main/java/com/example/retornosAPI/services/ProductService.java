@@ -78,4 +78,11 @@ public class ProductService {
             throw new IllegalArgumentException("The product description can have a maximum of 500 characters.");
         }
     }
+
+    private void validateProductPrice(double price){
+        if (price <= 0){
+            throw new IllegalArgumentException("The product price must be more than 0");
+        }
+    }
+
 }
