@@ -72,4 +72,10 @@ public class ProductService {
             throw new IllegalArgumentException("The product name must be between 3 and 100 characters.");
         }
     }
+
+    private void validateProductDescription(String description){
+        if (description != null && description.length() > 500){
+            throw new IllegalArgumentException("The product description can have a maximum of 500 characters.");
+        }
+    }
 }
