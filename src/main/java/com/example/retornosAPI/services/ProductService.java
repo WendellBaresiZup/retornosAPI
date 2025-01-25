@@ -86,8 +86,15 @@ public class ProductService {
     }
 
     private void validateProductStock(int stockQuantity){
-        if (stockQuantity < 0){
+        if (stockQuantity <= 0){
             throw new IllegalArgumentException("The quantity in stock must be greater than or equal to 0.");
         }
+    }
+
+    private void validateProduct(Product product){
+        validateProductName(product.name());
+        validateProductDescription(product.description());
+        validateProductPrice(product.price());
+        validateProductStock(product.stockQuantity());
     }
 }
