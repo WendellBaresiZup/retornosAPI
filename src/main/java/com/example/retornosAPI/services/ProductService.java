@@ -17,6 +17,7 @@ public class ProductService {
     }
 
     public Product createProduct(Product product) {
+        validateProductName(String.valueOf(product));
         ProductEntity entity = new ProductEntity(null, product.name(),product.description() ,product.price(),product.stockQuantity(), product.category());
         ProductEntity savedEntity = repository.save(entity);
         return new Product(savedEntity.getId(), savedEntity.getName(),savedEntity.getDescription() ,savedEntity.getPrice(), savedEntity.getStockQuantity(), savedEntity.getCategory());
@@ -64,5 +65,11 @@ public class ProductService {
             System.out.println("Produtos encontrados com o nome '" + name + "': " + entities.size());
         }
         return entities.stream().map(entity -> new ProductEntity(entity.getId(), entity.getName(), entity.getDescription() ,entity.getPrice(), entity.getStockQuantity(), entity.getCategory())).collect(Collectors.toList());
+    }
+
+    private void validateProductName(String name){
+        if (name == null || name.length() < 3 || name.length() > 100){
+            throw new IllegalArgumentException("The product name must be between 3 and 100 characters.");
+        }
     }
 }
