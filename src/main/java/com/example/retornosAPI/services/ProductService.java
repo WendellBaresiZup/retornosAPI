@@ -41,8 +41,8 @@ public class ProductService {
 
     public ResponseEntity<Map<String, String>> deleteProduct(Long id) {
         repository.deleteById(id);
-        Map<String, String> resposta = Map.of("Menssagem", "Produto Excluido com sucesso");
-        return ResponseEntity.status(HttpStatus.OK).body(resposta);
+        Map<String, String> responseBody = Map.of("Message", "Product Deleted Successfully");
+        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 
     // Atualizar um produto existente
