@@ -48,7 +48,9 @@ public class ProductService {
     // Atualizar um produto existente
     public ResponseEntity<Map<String, Object>> updateProduct(Long id, Product updatedProduct) {
         // Verificar se o produto existe
-        ProductEntity existingEntity = repository.findById(id).orElseThrow(() -> new RuntimeException("Product with ID " + id + " not found"));
+        ProductEntity existingEntity =
+                repository.findById(id).orElseThrow(() ->
+                        new RuntimeException("Product with ID " + id + " not found"));
         //Chama o metodo de validacoes para seguir os requisitos.
         validateProduct(updatedProduct);
         // Atualizar os dados do produto
@@ -59,10 +61,10 @@ public class ProductService {
         existingEntity.setCategory(updatedProduct.category());
         // Salvar as alterações no banco de dados
         ProductEntity savedEntity = repository.save(existingEntity);
-        Map<String, Object> resposta = Map.of("Mensagem", "Produto Atualizado com Sucesso", "Novos Dados",
+        Map<String, Object> responseBody = Map.of("Message", "Product Updated Successfully", "New Product Data",
                 new Product(savedEntity.getId(), savedEntity.getName(), savedEntity.getDescription() ,savedEntity.getPrice(), savedEntity.getStockQuantity(), savedEntity.getCategory()));
         // Retornar o produto atualizado
-        return ResponseEntity.status(HttpStatus.OK).body(resposta);
+        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 
     // Buscar produtos pelo nome
