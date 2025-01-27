@@ -2,9 +2,13 @@ package com.example.retornosAPI.services;
 import com.example.retornosAPI.models.Product;
 import com.example.retornosAPI.models.ProductEntity;
 import com.example.retornosAPI.repositories.ProductRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,11 +20,13 @@ public class ProductService {
         this.repository = repository;
     }
 
-    public Product createProduct(Product product) {
+    public ResponseEntity<Map<String, Object>> createProduct(Product product) {
         validateProduct(product);
         ProductEntity entity = new ProductEntity(null, product.name(),product.description() ,product.price(),product.stockQuantity(), product.category());
         ProductEntity savedEntity = repository.save(entity);
-        return new Product(savedEntity.getId(), savedEntity.getName(),savedEntity.getDescription() ,savedEntity.getPrice(), savedEntity.getStockQuantity(), savedEntity.getCategory());
+        Map<String, Object> corpoResposta = Map.of("Menssagem", "Produto criado com sucesso", "Dados Produto",
+                new Product(savedEntity.getId(), savedEntity.getName(),savedEntity.getDescription() ,savedEntity.getPrice(), savedEntity.getStockQuantity(), savedEntity.getCategory()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(corpoResposta);
     }
 
     public ProductEntity getProductById(Long id) {
