@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/products")
@@ -20,8 +22,9 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        return ResponseEntity.ok(service.createProduct(product));
+    public ResponseEntity<Map<String, Object>> createProduct(@RequestBody Product product) {
+        ResponseEntity<Map<String,Object>> productCreated = service.createProduct(product);
+        return ResponseEntity.status(productCreated.getStatusCode()).body(productCreated.getBody());
     }
 
     @GetMapping("/{id}")
