@@ -43,10 +43,10 @@ public class ProductController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable(value = "id") Long id, @RequestBody Product updatedProduct){
+    public ResponseEntity<Map<String, Object>> updateProduct(@PathVariable(value = "id") Long id, @RequestBody Product updatedProduct){
         try {
-            Product updated = service.updateProduct(id, updatedProduct);
-            return ResponseEntity.ok(updated);
+            ResponseEntity<Map<String, Object>> atualizado = service.updateProduct(id, updatedProduct);
+            return atualizado;
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
