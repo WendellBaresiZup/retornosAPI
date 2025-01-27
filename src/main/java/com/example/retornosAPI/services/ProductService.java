@@ -24,9 +24,9 @@ public class ProductService {
         validateProduct(product);
         ProductEntity entity = new ProductEntity(null, product.name(),product.description() ,product.price(),product.stockQuantity(), product.category());
         ProductEntity savedEntity = repository.save(entity);
-        Map<String, Object> corpoResposta = Map.of("Message", "Product created successfully", "Product Data",
+        Map<String, Object> responseBody = Map.of("Message", "Product created successfully", "Product Data",
                 new Product(savedEntity.getId(), savedEntity.getName(),savedEntity.getDescription() ,savedEntity.getPrice(), savedEntity.getStockQuantity(), savedEntity.getCategory()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(corpoResposta);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
     }
 
     public ProductEntity getProductById(Long id) {
@@ -39,8 +39,10 @@ public class ProductService {
         return repository.findAll().stream().map(entity -> new ProductEntity(entity.getId(), entity.getName(), entity.getDescription(),entity.getPrice(), entity.getStockQuantity(), entity.getCategory())).collect(Collectors.toList());
     }
 
-    public void deleteProduct(Long id) {
+    public ResponseEntity<Map<String, String>> deleteProduct(Long id) {
         repository.deleteById(id);
+        Map<String, String> resposta = Map.of("Menssagem", "Produto Excluido com sucesso");
+        return ResponseEntity.status(HttpStatus.OK).body(resposta);
     }
 
     // Atualizar um produto existente
