@@ -24,7 +24,7 @@ public class ProductService {
         validateProduct(product);
         ProductEntity entity = new ProductEntity(null, product.name(),product.description() ,product.price(),product.stockQuantity(), product.category());
         ProductEntity savedEntity = repository.save(entity);
-        Map<String, Object> corpoResposta = Map.of("Menssagem", "Produto criado com sucesso", "Dados Produto",
+        Map<String, Object> corpoResposta = Map.of("Message", "Product created successfully", "Product Data",
                 new Product(savedEntity.getId(), savedEntity.getName(),savedEntity.getDescription() ,savedEntity.getPrice(), savedEntity.getStockQuantity(), savedEntity.getCategory()));
         return ResponseEntity.status(HttpStatus.CREATED).body(corpoResposta);
     }
