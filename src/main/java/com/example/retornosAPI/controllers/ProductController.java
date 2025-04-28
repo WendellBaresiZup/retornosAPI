@@ -1,11 +1,15 @@
 package com.example.retornosAPI.controllers;
 
 import com.example.retornosAPI.models.Product;
+import com.example.retornosAPI.models.ProductEntity;
 import com.example.retornosAPI.services.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/products")
@@ -18,23 +22,46 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        return ResponseEntity.ok(service.createProduct(product));
+    public ResponseEntity<Map<String, Object>> createProduct(@RequestBody Product product) {
+        ResponseEntity<Map<String,Object>> productCreated = service.createProduct(product);
+        return ResponseEntity.status(productCreated.getStatusCode()).body(productCreated.getBody());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+    public ResponseEntity<ProductEntity> getProductById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getProductById(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
+    public ResponseEntity<List<ProductEntity>> getAllProducts() {
         return ResponseEntity.ok(service.getAllProducts());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        service.deleteProduct(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Map<String, String>> deleteProduct(@PathVariable Long id) {
+        return service.deleteProduct(id);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Map<String, Object>> updateProduct(@PathVariable(value = "id") Long id, @RequestBody Product updatedProduct){
+        try {
+            ResponseEntity<Map<String, Object>> atualizado = service.updateProduct(id, updatedProduct);
+            return atualizado;
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductEntity>> getProductByName(@RequestParam String name){
+        try {
+            List<ProductEntity> products = service.getProductsByName(name);
+            if (products.isEmpty()){
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(products);
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(Collections.emptyList());
+        }
     }
 }
